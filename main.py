@@ -1,3 +1,4 @@
+import os
 import uvicorn
 from fastapi import FastAPI
 from database.database import engine, Base, async_session_maker
@@ -49,4 +50,9 @@ app.include_router(equipment_router.router, prefix="/equipment")
 app.include_router(request_router.router, prefix="/requests")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host = "localhost", port = 8000, reload=True, workers=1)
+    uvicorn.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=int(os.environ.get("PORT", 8000)),
+        workers=1
+    )
